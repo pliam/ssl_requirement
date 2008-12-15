@@ -45,12 +45,17 @@ module SslRequirement
       (self.class.read_inheritable_attribute(:ssl_allowed_actions) || []).include?(action_name.to_sym)
     end
 
+    # allow overriding to match certificate common name
+    def ssl_cn_host
+      request.host
+    end
+
   private
     def ensure_proper_protocol
       return true if ssl_allowed?
 
       if ssl_required? && !request.ssl?
-        redirect_to "https://" + request.host + request.request_uri
+        redirect_to "https://" + ssl_cn_host + request.request_uri
         flash.keep
         return false
       elsif request.ssl? && !ssl_required?

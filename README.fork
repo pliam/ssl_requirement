@@ -2,7 +2,8 @@ This is a simple fork of SSL Requirement to allow you to redirect
 to the specific host whose DNS name matches common name (CN) on
 the X.509 cert.  This prevents unnecessary error dialogs.
 
-To use it, you merely override the template method 
+To use it, you merely override the template method 'ssl_cn_host', 
+which returns the request host, by default.
 
 John Pliam
 john.pliam@gmail.com
